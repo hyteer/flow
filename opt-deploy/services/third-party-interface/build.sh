@@ -1,3 +1,4 @@
+#!/bin/bash
 date
 SRV_NAME="third-party-interface"
 WORKDIR=${PWD}
