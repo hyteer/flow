@@ -10,6 +10,12 @@ SRV_NAME="service-third-party-interface"
 function deploy_service() {
     echo "==部署service-${SRV_NAME}=="
     cd ${WEB_PATH}/${SRV_NAME}
+    echo "===生成thrift code..."
+    chmod +x thrift-file-generate.sh
+    ./thrift-file-generate.sh
+    echo "===生成结果..."
+    ls thriftServices
+    echo "===Init..."
     php init --env=Test --overwrite=All
     sed -i "s/'hostname' => '10.100.100.70'/'hostname' => '${REDIS}'/g" config/main-local.php
     sed -i 's/mysql:host=10.100.100.71;/mysql:host=10.20.60.3;/g' config/main-local.php
