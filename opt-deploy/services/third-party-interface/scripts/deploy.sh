@@ -11,8 +11,7 @@ function deploy_service() {
     echo "==部署service-${SRV_NAME}=="
     cd ${WEB_PATH}/${SRV_NAME}
     echo "===生成thrift code..."
-    chmod +x thrift-file-generate.sh
-    ./thrift-file-generate.sh
+    /bin/bash thrift-file-generate.sh
     echo "===生成结果..."
     ls thriftServices
     echo "===Init..."
