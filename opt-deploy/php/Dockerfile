@@ -6,4 +6,5 @@ RUN apt-get update \
     && pecl install libevent-0.1.0 \
     && docker-php-ext-enable libevent
 RUN apt-get install -y nano net-tools && \
+    thrift-compiler && \
     mkdir -p /scripts /data/www
