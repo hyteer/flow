@@ -1,6 +1,6 @@
 #!/bin/bash
 date
-SRV_NAME="third-party-interface"
+SRV_NAME="service-third-party-interface"
 WORKDIR=${PWD}
 CODE="${WORKDIR}/_code_/${SRV_NAME}"
 ####
@@ -24,5 +24,5 @@ ls thriftServices
 # build image
 cd ${WORKDIR} && ls
 chmod +x scripts/*
-docker build -t opt/third-party-interface .
+docker build -t opt/${SRV_NAME} .
 #rm -rf ${CODE}
