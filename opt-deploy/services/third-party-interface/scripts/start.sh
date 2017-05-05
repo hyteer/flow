@@ -3,8 +3,7 @@
 BASE="/data"
 WEB_PATH="/data/www"
 PHP="/usr/local/bin/php"
-CONSUL="/usr/local/sbin/consul"
-WAIT="/scripts/wait-for-it.sh"
+WAIT="/scripts/tools/wait-for-it.sh"
 SRV_NAME="third-party-interface"
 
 echo "启动服务..."
