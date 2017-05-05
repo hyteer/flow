@@ -1,0 +1,13 @@
+FROM nginx:alpine
+ENV BASE_DIR="/data" \
+    CODE="_code_" \
+    NGINX_DIR="/etc/nginx"
+ENV WEB_DIR="${BASE_DIR}/www"
+RUN mkdir -p ${WEB_DIR} /scripts
+ADD ${CODE} ${WEB_DIR}
+ADD conf ${NGINX_DIR}
+ADD scripts /scripts
+RUN /scripts/deploy.sh
+CMD ["/scripts/start.sh"]
+
+

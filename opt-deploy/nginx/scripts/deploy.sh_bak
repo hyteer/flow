@@ -1,0 +1,17 @@
+#!/bin/sh
+echo "开始部署服务......"
+BASE="/data"
+WEB_PATH="${BASE}/www"
+
+function make_soft_link() {
+    echo "建立域名映射软链接..."
+    cd ${WEB_PATH}
+    #ln -s gateway-app-salesman appdt.testopt.snsshop.net
+    #ln -s gateway-boss boss.testopt.snsshop.net
+    ln -s frontend-h5-rest-shop \*.testmopt.snsshop.net
+}
+
+
+make_soft_link
+
+echo "部署完成..."
