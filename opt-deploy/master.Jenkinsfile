@@ -34,6 +34,13 @@ pipeline {
                 sh 'echo "完成自动化测试..."'
             }
         }
+        stage('人工测试复核') {
+            steps {
+                sh 'echo "测试结果复核..."'
+                input '确认测试结果'
+                sh 'echo "完成复核..."'
+            }
+        }
 
     }
 }
