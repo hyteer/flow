@@ -38,8 +38,8 @@ pipeline {
             steps {
                 sh 'echo "测试结果复核..."'
                 //input '确认测试结果'
-                input message: '请在完成人工测试并通过后点击下方确认按钮', ok: '确认通过', submitter: 'huyt', submitterParameter: 'submit_user'
-                sh 'echo "完成复核..."'
+                input message: '人工测试通过后点击下方确认按钮', ok: '确认', submitter: 'huyt', submitterParameter: 'submit_user'
+                sh 'echo "复核完成..."'
             }
         }
         stage('灰度发布') {
