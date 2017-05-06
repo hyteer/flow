@@ -1,5 +1,6 @@
 #!groovy
 def env="Debug"
+println "Hello, this is OptPrime workflow..."
 
 pipeline {
     agent { label 'node-5'}
@@ -40,6 +41,7 @@ pipeline {
                 //input '确认测试结果'
                 input message: '人工测试通过后点击下方确认按钮', ok: '确认', submitter: 'huyt', submitterParameter: 'submit_user'
                 sh 'echo "复核完成..."'
+                println "复核人：${submit_user}"
             }
         }
         stage('灰度发布') {
