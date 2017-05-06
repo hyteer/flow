@@ -4,7 +4,7 @@ def env="Debug"
 pipeline {
     agent { label 'node-5'}
     stages {
-        stage('镜像构造') {
+        stage('拉取代码') {
             steps {
                 //sh 'echo "Pull git repos..."'
                 sh '''echo "checkout deploy codes..."'''
@@ -15,10 +15,10 @@ pipeline {
 
                 sh 'echo "checkout frontend-h5-rest-shop..."'
 
-
+                
             }
         }
-        stage('测试环境部署') {
+        stage('Stage2') {
             steps {
                 //sh 'echo "Init thrift..."'
                 sh '''
