@@ -11,8 +11,8 @@ function start_service () {
 	# service-base
 	echo "启动${SRV_NAME}..."
 	cd ${WEB_PATH}/${SRV_NAME}
-	php start.php start -d
-	php start.php status
+	php start.php start #-d
+	#php start.php status
 
 }
 

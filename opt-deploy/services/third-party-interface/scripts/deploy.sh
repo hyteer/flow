@@ -7,7 +7,7 @@ SRV_NAME="service-third-party-interface"
 SRV_DIR="${WEB_PATH}/${SRV_NAME}"
 
 function deploy_service() {
-    echo "==开始部署service-${SRV_NAME}=="
+    echo "==开始部署${SRV_NAME}=="
     cd ${SRV_DIR}
     echo "===生成thrift codes..."
     /bin/bash thrift-file-generate.sh
