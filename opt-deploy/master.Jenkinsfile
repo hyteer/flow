@@ -38,7 +38,7 @@ pipeline {
             steps {
                 sh 'echo "测试结果复核..."'
                 //input '确认测试结果'
-                input message: '确认测试结果', ok: '确认通过', submitter: 'huyt', submitterParameter: 'submit_user'
+                input message: '确认测试结果', ok: '确认通过', abort: '取消', submitter: 'huyt', submitterParameter: 'submit_user'
                 sh 'echo "完成复核..."'
             }
         }
