@@ -30,15 +30,23 @@ pipeline {
         stage('自动化测试') {
             steps {
                 sh 'echo "开始自动化测试..."'
-                sh 'ls ./ && ls /'
+                sh 'sleep 3'
                 sh 'echo "完成自动化测试..."'
             }
         }
         stage('人工测试复核') {
             steps {
                 sh 'echo "测试结果复核..."'
-                input '确认测试结果'
+                //input '确认测试结果'
+                input message: '确认测试结果', ok: '确认通过', submitterParameter: 'huyt'
                 sh 'echo "完成复核..."'
+            }
+        }
+        stage('灰度发布') {
+            steps {
+                sh 'echo "开始线上灰度发布..."'
+                sh 'sleep 3'
+                sh 'echo "完成灰度发布..."'
             }
         }
 
