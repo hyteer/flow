@@ -5,11 +5,12 @@ node {
    def GIT_URL
    println "Env: ${ENV}"
    println "Service Name: ${srvName}"
-   stage('Preparation') {
+   stage('Pull SCMs') {
       // Get some code from a GitHub repository
       //git 'https://github.com/jglick/simple-maven-project-with-tests.git'
       GIT_URL = "https://github.com/hyteer/${srvName}.git"
       echo "Git: ${GIT_URL}"
+      git url: "${GIT_URL}"
       //mvnHome = tool 'M3'
    }
    stage('Build') {
