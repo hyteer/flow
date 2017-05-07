@@ -10,7 +10,9 @@ node {
       //git 'https://github.com/jglick/simple-maven-project-with-tests.git'
       GIT_URL = "https://github.com/hyteer/${repoName}.git"
       echo "Git: ${GIT_URL}"
-      git url: "${GIT_URL}"
+      //git url: "${GIT_URL}"
+      sh 'rm -rf *'
+      checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: srvName]], submoduleCfg: [], userRemoteConfigs: [[url: GIT_URL]]])
       //mvnHome = tool 'M3'
    }
    stage('Build') {
