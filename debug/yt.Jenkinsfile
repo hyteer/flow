@@ -4,7 +4,7 @@ node {
    def ENV = "Debug"
    def GIT_URL
    println "Env: ${ENV}"
-   println "Service Name: ${srvName}\n Repo Nane: ${repoName}"
+   println "Service Name: ${srvName}\n Repo Name: ${repoName}"
    stage('Pull SCMs') {
       // Get some code from a GitHub repository
       //git 'https://github.com/jglick/simple-maven-project-with-tests.git'
