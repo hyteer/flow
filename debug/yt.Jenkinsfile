@@ -4,11 +4,11 @@ node {
    def ENV = "Debug"
    def GIT_URL
    println "Env: ${ENV}"
-   println "Service Name: ${srvName}"
+   println "Service Name: ${srvName}\n Repo Nane: ${repoName}"
    stage('Pull SCMs') {
       // Get some code from a GitHub repository
       //git 'https://github.com/jglick/simple-maven-project-with-tests.git'
-      GIT_URL = "https://github.com/hyteer/${srvName}.git"
+      GIT_URL = "https://github.com/hyteer/${repoName}.git"
       echo "Git: ${GIT_URL}"
       git url: "${GIT_URL}"
       //mvnHome = tool 'M3'
