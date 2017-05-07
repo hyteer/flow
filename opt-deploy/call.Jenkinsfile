@@ -7,7 +7,7 @@ def BUILD_NODE = "node-5"
 def GIT_OPS_URL = "https://github.com/hyteer/flow.git"
 def GIT_SRV_URL = "https://github.com/hyteer/${SERVICE}.git"
 
-optBuild {
+srvBuild {
           srvName = SERVICE
           repoName = REPOS
           node = BUILD_NODE
