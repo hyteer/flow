@@ -15,9 +15,10 @@ def CREDENTIALS_ID = "bee70a17-6e2f-472b-ba14-285b77af3e38"
 //def GIT_SRV_URL = "https://github.com/hyteer/${SERVICE}.git"
 
 srvBuild {
-		SRV_NAME = srvName
-		REPOS = repoName
+		SRV_NAME = service_name
+		REPOS = "sample"
 		BRANCH = branch
+    RUN_MODE = run_mode
 		NODE = "node-5"
 		GIT_OPS_URL = "https://github.com/hyteer/flow.git"
 		GIT_SRV_URL = "https://git.snsshop.net/OptPrime/${SERVICE}.git"
