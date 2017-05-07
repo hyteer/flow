@@ -20,11 +20,8 @@ srvBuild {
 		GIT_SRV_URL = "https://git.snsshop.net/OptPrime/${srvName}.git"
 		SRC_DIR = "opt-deploy/services/third-party/_code_/${srvName}"
 		CREDENTIALS_ID = "bee70a17-6e2f-472b-ba14-285b77af3e38"
+}
 
-		//srvName = "product"
-		//repoName = "sample"
-		//node = "node-5"
-		//gitUrl = "https://github.com/hyteer/flow.git"
-		//GIT_SRV_URL = "https://github.com/hyteer/sample.git"
-		//GIT_OPS_URL = "http://10.100.100.54/snsshop/opt-deploy.git"
+srvRun {
+
 }

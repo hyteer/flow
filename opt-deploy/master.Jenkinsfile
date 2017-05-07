@@ -1,56 +1,58 @@
-#!groovy
-def env="Debug"
-println "Hello, this is OptPrime workflow...ENV: " + env
-
-pipeline {
-    agent { label 'node-5'}
-    stages {
-        stage('镜像构造') {
-            steps {
-                //sh 'echo "Pull git repos..."'
-                sh 'echo "开始构造镜像..."'
-                build 'OPT/services/third-party-interface2'
-                //checkout([$class: 'GitSCM', branches: [[name: '*/debug']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '83edf549-cf8a-4056-9ed2-d8b635a4a5ee', url: 'http://10.100.100.54/snsshop/opt-deploy.git']]])
-                //sh 'echo "checkout frontend-h5-rest-shop..."'
-                //checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'nginx/_code_/frontend-h5-rest']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'bee70a17-6e2f-472b-ba14-285b77af3e38', url: 'https://git.snsshop.net/OptPrime/frontend-h5-rest-shop.git']]])
-                //sh 'echo "checkout frontend-h5-rest-shop..."'
-                sh 'echo "镜像构造完毕..."'
-
-
+node {
+    stage("拉取代码"){
+        parallel(
+            "webgate": {
+                echo '单元测试...'
+            },
+            "services": {
+                echo '集成测试...'
             }
-        }
-        stage('测试环境部署') {
-            steps {
-                //sh 'echo "Init thrift..."'
-                sh '''
-                    echo "开始部署测试环境..."
-                    date
-                '''
-            }
-        }
-        stage('自动化测试') {
-            steps {
-                sh 'echo "开始自动化测试..."'
+        )
+    }
+}
+node {
+    stage("底层测试") {
+        parallel(
+            "Sonar": {
+                echo 'Sonar code scan...'
+                sh 'sleep 2'
+            },
+            "单元测试": {
+                echo 'Unit test...'
                 sh 'sleep 3'
-                sh 'echo "完成自动化测试..."'
             }
-        }
-        stage('人工测试复核') {
-            steps {
-                sh 'echo "测试结果复核..."'
-                //input '确认测试结果'
-                input message: '人工测试通过后点击下方确认按钮', ok: '确认', submitter: 'huyt', submitterParameter: 'submit_user'
-                sh 'echo "复核完成...复核人：${submit_user}"'
-                //println "复核人："+ submit_user
-            }
-        }
-        stage('灰度发布') {
-            steps {
-                sh 'echo "开始线上灰度发布..."'
-                sh 'sleep 3'
-                sh 'echo "完成灰度发布..."'
-            }
-        }
-
+        )
+    }
+}
+node {
+    stage("测试环境部署") {
+        echo "测试环境部署"
+        sh 'sleep 3'
+    }
+}
+node {
+    stage("自动化测试") {
+      parallel(
+          "接口测试": {
+              echo 'API集成测试...'
+              sh 'sleep 2'
+          },
+          "UI测试": {
+              echo 'UI冒烟测试...'
+              sh 'sleep 3'
+          }
+      )
+    }
+}
+node {
+    stage("人工复核") {
+      echo "人工测试完成后确认..."
+      sh 'sleep 3'
+    }
+}
+node {
+    stage("灰度发布") {
+      echo "灰度发布、部署、更新..."
+      sh 'sleep 3'
     }
 }
