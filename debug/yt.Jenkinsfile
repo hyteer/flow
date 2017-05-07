@@ -1,30 +1,26 @@
 #!groovy
 
-pipeline {
-    agent any
-
-    environment {
-        ENV = "Debug"
-        DB_ENGINE    = 'sqlite'
-    }
-
-    stages {
-        stage("init workspace...") {
-            steps {
-                sh 'echo "Env: ${ENV}"'
-                sh 'printenv'
-            }
-        }
-        stage('Pull SCMs') {
-            steps {
-                println "Service: ${srvName}"
-                println "Git address: ${gitUrl}"
-                sh 'rm -rf *'
-                //echo 'job for service: ${srvName}'
-                //echo 'job run mode: ${runMode}'
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: srvName]], submoduleCfg: [], userRemoteConfigs: [[url: gitUrl]]])
-                //git gitUrl
-            }
-        }
-    }
+node {
+   def ENV = "Debug"
+   def GIT_URL
+   println "Env: ${ENV}"
+   println "Service Name: ${srvName}"
+   stage('Preparation') {
+      // Get some code from a GitHub repository
+      //git 'https://github.com/jglick/simple-maven-project-with-tests.git'
+      GIT_URL = "https://github.com/hyteer/${srvName}.git"
+      echo "Git: ${GIT_URL}"
+      //mvnHome = tool 'M3'
+   }
+   stage('Build') {
+      // Run the maven build
+      if (isUnix()) {
+         sh 'echo "ready to build..."'
+      } else {
+         echo "not support none Unix system."
+      }
+   }
+   stage('Results') {
+      echo "results..."
+   }
 }
