@@ -1,1 +1,0 @@
-SCtek CI/Pipeline
