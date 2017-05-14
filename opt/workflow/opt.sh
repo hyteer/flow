@@ -3,45 +3,34 @@ MANAGER="consul"
 NET_NAME="opt-net"
 
 #WAIT="./scripts/wait-for-it.sh"
+services=(
+		Base
+		Qrcode
+		Pay
+		Product
+		Shop
+		Message
+		Users
+		ThirdParty
+		ThirdPartyInterface
+)
 
 
 echo "start..."
 
 
 function up () {
-	echo "创建网络..."
-	docker network create -d overlay ${NET_NAME}
-	echo "启动gate-go网关..."
-	docker service create --network ${NET_NAME} --name gate-go 10.100.100.130:5000/opt/gate-go
-	echo "启动consul网关..."
-	docker service create --network ${NET_NAME} --name consul 10.100.100.130:5000/opt/consul
-
-	#echo "启动gate-appdt网关..."
-	#docker service create --network ${NET_NAME} --name gate-appdt 10.100.100.130:5000/opt/gate-appdt
-	#echo "启动gate-appmc网关..."
-	#docker service create --network ${NET_NAME} --name gate-appmc 10.100.100.130:5000/opt/gate-appmc
-	#echo "启动gate-merc网关..."
-	#docker service create --network ${NET_NAME} --name gate-merc 10.100.100.130:5000/opt/gate-merc
-
-	echo "启动gate-base服务..."
-	docker service create --network ${NET_NAME} --name Base 10.100.100.130:5000/opt/service-base:ci
-	echo "启动gate-qrcode..."
-	docker service create --network ${NET_NAME} --name Qrcode 10.100.100.130:5000/opt/service-qrcode:ci
-	echo "启动gate-pay..."
-	docker service create --network ${NET_NAME} --name Pay 10.100.100.130:5000/opt/service-pay:ci
-	#echo "启动gate-product..."
-	#docker service create --network ${NET_NAME} --name Product 10.100.100.130:5000/opt/service-product:ci
-	#echo "启动gate-user..."
-	#docker service create --network ${NET_NAME} --name Users 10.100.100.130:5000/opt/service-user:ci
-	#echo "启动gate-third-party..."
-	#docker service create --network ${NET_NAME} --name ThirdParty 10.100.100.130:5000/opt/service-third-party:ci
-	#echo "启动gate-third-party-interface..."
-	#docker service create --network ${NET_NAME} --name ThirdPartyInterface 10.100.100.130:5000/opt/service-third-party-interface:ci
-
-	echo "启动nginx服务..."
-	sleep 3
-
-	docker service create --network ${NET_NAME} --name nginx -p 80:80 10.100.100.130:5000/opt/nginx
+	#echo "创建网络..."
+	#docker network create -d overlay ${NET_NAME}
+	echo "启动服务..."
+	for srv in ${services[@]}
+	do
+		docker service create --network ${NET_NAME} --name  ${srv} 10.100.100.130:5000/opt/service-base:ci
+		docker service rm ${srv}
+	done
+	#echo "启动nginx服务..."
+	#sleep 3
+	#docker service create --network ${NET_NAME} --name nginx -p 80:80 10.100.100.130:5000/opt/nginx
 
 	echo "启动完成..."
 
@@ -50,24 +39,20 @@ function up () {
 function down () {
 	echo "删除服务..."
 
-	docker service rm srv-base
-	docker service rm srv-qrcode
-	docker service rm srv-pay
-	#docker service rm srv-product
-	#docker service rm srv-user
-	#docker service rm srv-third-party
-	#docker service rm srv-third-party-interface
-
-	docker service rm nginx
-	docker service rm gate-go
-	docker service rm consul
+	for srv in ${services[@]}
+	do
+		docker service rm ${srv}
+	done
+	#docker service rm nginx
+	#docker service rm gate-go
+	#docker service rm consul
 	#docker service rm gate-appdt
 	#docker service rm gate-appmc
 	#docker service rm gate-merc
 
 	#echo "删除网络..."
 	#docker network rm ${NET_NAME}
-	#echo "已删除..."
+	echo "服务已删除..."
 }
 
 function ps () {
